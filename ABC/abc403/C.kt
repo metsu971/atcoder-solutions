@@ -1,28 +1,30 @@
+/**
+ * allGrantedUserList: MutableList<Int> だと、毎回containsでリストをなめるので O(N) → 遅い
+ * → allGrantedUserSet: MutableSet<Int> にしたほうがいい。（SetはO(1)探索！）
+ */
 fun main() {
 
     //入力値を受け取る
     val (N,M,Q) = readLine()!!.split(" ").map { it.toInt() }
 
-    var userAvailableMap = mutableMapOf<Int, MutableList<Int>>()
-    val allGrantedUserList = mutableListOf<Int>()
-    //先にクエリを計算
+    var userAvailableMap = mutableMapOf<Int, MutableSet<Int>>()
+    val allGrantedUserSet = mutableSetOf<Int>()
+
     for (i in 1..Q) {
-        val qxyList = readLine()!!.split(" ").map { it.toInt() }
-        if (qxyList[0] == 1) {
-            if (allGrantedUserList.contains(qxyList[1])){continue}
-            if (userAvailableMap[qxyList[1]] != null) {
-                val list = userAvailableMap[qxyList[1]]
-                list?.add(qxyList[2])
-                userAvailableMap[qxyList[1]] = list!!
-            } else {
-                userAvailableMap[qxyList[1]] = mutableListOf(qxyList[2])
+        val query = readLine()!!.split(" ").map { it.toInt() }
+        if (query[0] == 1) {
+            val (x, y) = query.drop(1)
+            if (!allGrantedUserSet.contains(x)) {
+                userAvailableMap.getOrPut(x) { mutableSetOf() }.add(y)
             }
-        } else if (qxyList[0] == 2) {
-            allGrantedUserList.add(qxyList[1])
-        } else if(qxyList[0] == 3) {
-            if (userAvailableMap.get(qxyList[1]) == null) {
-                println("No")
-            } else if (userAvailableMap.get(qxyList[1])!!.contains(qxyList[2]) || allGrantedUserList.contains(qxyList[1])) {
+        } else if (query[0] == 2) {
+            val x = query[1]
+            allGrantedUserSet.add(x)
+        } else if(query[0] == 3) {
+            val (x, y) = query.drop(1)
+            if (allGrantedUserSet.contains(x)) {
+                println("Yes")
+            } else if (userAvailableMap[x]?.contains(y) == true) {
                 println("Yes")
             } else {
                 println("No")
@@ -30,6 +32,3 @@ fun main() {
         }
     }
 }
-
-
-
