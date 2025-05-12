@@ -1,16 +1,14 @@
 fun main() {
     val N = readLine()!!.toInt()
-    val A = readLine()!!.split(" ").map { it.toInt() }.toMutableList()
+    val A = readLine()!!.split(" ").map { it.toLong() } 
 
-    var sum :Long = 0
+    var result = 0L
+    var suffixSum = A.sum()
 
-    for (i in 0 until N){
-        for (j in 0 until N) {
-            if (i >= j) {
-                continue
-            }
-            sum += A[i] * A[j]
-        }
+    for(i in 0 until N) {
+        suffixSum -= A[i]
+        result += A[i] * suffixSum
     }
-    print(sum)
+
+    print(result)
 }
