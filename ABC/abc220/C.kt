@@ -3,17 +3,21 @@ fun main() {
     val A = readLine()!!.split(" ").map { it.toLong() }
     val X = readLine()!!.toLong()
 
-    var count = 0L
-    var sum = 0L
-    var index = 0
+    //最初にAの合計を求める
+    val totalOneRound = A.sum()
 
-    while (true) {
-        sum += A[index]
+    //Xを超えるまでに何周必要かを計算
+    val fullRounds = X / totalOneRound
+    var sum = fullRounds * totalOneRound
+    var count = fullRounds * A.size//Aの数 * 何周かでループ数を算出
+
+    //上記で計算した以外の残りの部分だけループ
+    for(a in A) {
+        sum += a
         count++
         if (sum > X) {
             print(count)
             return
         }
-        index = (index + 1) % A.size
     }
 }
