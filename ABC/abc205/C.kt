@@ -1,17 +1,20 @@
-import kotlin.math.pow
-
 fun main() {
-    val (A, B, C) = readLine()!!.split(" ").map { it.toDouble() }
+    val (A, B, C) = readLine()!!.split(" ").map { it.toLong() }
 
-    if (pow(A, C) == pow(B, C)) {
-        print("=")
-    } else if (pow(A, C) < pow(B, C)) {
-        print("<")
+    val result = if (C % 2 == 0L) {
+        // 絶対値での比較
+        when {
+            kotlin.math.abs(A) < kotlin.math.abs(B) -> "<"
+            kotlin.math.abs(A) > kotlin.math.abs(B) -> ">"
+            else -> "="
+        }
     } else {
-        print(">")
+        when {
+            A < B -> "<"
+            A > B -> ">"
+            else -> "="
+        }
     }
-}
 
-fun pow(value1: Double, value2: Double): Double {
-    return value1.pow(value2)
+    print(result)
 }
