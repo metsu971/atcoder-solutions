@@ -3,7 +3,7 @@ fun main() {
     val A = readLine()!!.split(" ").map { it.toInt() }
 
     var allSum = 0L
-    var distinctCount = 0L
+    var duplicatePairs = 0L
 
     for (i in 2..N) {
         allSum += i-1
@@ -15,8 +15,10 @@ fun main() {
     }
 
     for((_, count) in countMap) {
-        distinctCount += count * (count -1) / 2
+        for (i in 1 until count) {
+            duplicatePairs += i
+        }
     }
 
-    print(allSum - distinctCount)
+    print(allSum - duplicatePairs)
 }
