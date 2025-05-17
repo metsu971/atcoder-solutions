@@ -1,4 +1,3 @@
-import kotlin.math.pow
 fun main() {
     val (N, K) = readLine()!!.split(" ").map {it.toInt() }
     val A = readLine()!!.split(" ").map {it.toLong() }
